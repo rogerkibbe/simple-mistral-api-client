@@ -65,8 +65,8 @@ for button in model_buttons:
     button.on_click(on_model_selected)
 
 # Title and Model Selection Message
-title = pn.pane.Markdown("## Mistral API Chat App - [GitHub](https://github.com/rogerkibbe)")
-model_selection_message = pn.pane.Markdown("### Select your Mistral Model")
+title = pn.pane.Markdown("## Mistral API Chat App - [GitHub](https://github.com/rogerkibbe/simple-mistral-api-client)")
+model_selection_message = pn.pane.Markdown("### Select your Mistral LLM Model")
 
 # Model selection layout
 model_selection_layout = pn.Column(alert, model_selection_message, *model_buttons, sizing_mode='stretch_width')
