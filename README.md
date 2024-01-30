@@ -1,4 +1,9 @@
-# MistralAI LLM Chat Client - Command Line and Web
+<p align="Center">
+  <img src="https://github-img.s3.amazonaws.com/mistral-ai-api.png">
+  <br/>
+  <h1 align="Center"> Mistral AI LLM Simple Chat Client - Command Line and Web</h1>
+</p>
+
 
 Mistral.AI offers an API with three LLM models:
 1) Mistral 7B: Mistral 7B parameter model
