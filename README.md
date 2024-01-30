@@ -23,10 +23,22 @@ Before running either python script, make sure you have the following prerequisi
 
 ## Installation
 
-1. **Clone the Repository:**
+1. **Clone the Repository**
+   ```bash
+   git clone https://github.com/rogerkibbe/simple-mistral-api-client
+   cd simple-mistral-api-client
+   ```
 
-2. **Install Dependencies:**
-   - Run `pip install -r requirements.txt` to install the required Python packages.
+2. **Install Dependencies**
+   - It's recommended to use a virtual environment:
+     ```bash
+     python -m venv mistralenv 
+     source mistralenv/bin/activate  # On Windows use `venv\Scripts\activate`
+     ```
+   - Install the required packages:
+     ```bash
+     pip install -r requirements.txt
+     ```
 
 3. **Environment Variables:**
    - Create a `.env` file in the root directory of the project.

@@ -57,6 +57,7 @@ def on_model_selected(event):
     chat_view = create_chat_interface(model_api_id, model_name)
     main_view.objects = [chat_view]
 
+
 alert = pn.pane.Alert("", alert_type="light", visible=False)
 
 # Create buttons for model selection
