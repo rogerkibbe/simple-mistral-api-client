@@ -24,9 +24,11 @@ def select_model():
     model_name = os.getenv("MODEL")
     if not model_name:
         available_models = [
-            ("Mistral 7B", "mistral-tiny"),
-            ("Mistral Mixtral-8x7B", "mistral-small"),
-            ("Mistral Medium", "mistral-medium"),
+            ("Open Mistral 7B", "open-mistral-7b"),
+            ("Open Mistral Mixtral-8x7B", "open-mixtral-8x7b"),
+            ("Mistral Small", "mistral-small-latest"),
+            ("Mistral Medium", "mistral-medium-latest"),
+            ("Mistral Large", "mistral-large-latest")
         ]
         print("Please select the model you want to use:")
         for i, (friendly_name, _) in enumerate(available_models, start=1):

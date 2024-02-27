@@ -6,73 +6,86 @@ from mistralai.async_client import MistralAsyncClient
 from mistralai.models.chat_completion import ChatMessage
 
 pn.extension()
-
 load_dotenv()
 api_key = os.getenv("MISTRAL_API_KEY")
 
-# Stop if no API key
 if not api_key:
     print("Error: MISTRAL_API_KEY is not defined. Please set the API key in your environment.")
-    sys.exit()  # Exit the script
+    sys.exit()
 
 client = MistralAsyncClient(api_key=api_key)
 
-# available models
 available_models = [
-    ("Mistral 7B", "mistral-tiny"),
-    ("Mistral Mixtral-8x7B", "mistral-small"),
-    ("Mistral Medium", "mistral-medium"),
+    ("Open Mistral 7B", "open-mistral-7b"),
+    ("Open Mistral Mixtral-8x7B", "open-mixtral-8x7b"),
+    ("Mistral Small", "mistral-small-latest"),
+    ("Mistral Medium", "mistral-medium-latest"),
+    ("Mistral Large", "mistral-large-latest")
 ]
 
-# message history for LLM
+model_selector = pn.widgets.Select(name='Select Model', options={name: api_id for name, api_id in available_models},
+                                   value=available_models[0][1])
+guardrails_select = pn.widgets.Select(name='Guardrails', options=[True, False], value=False)
+temperature_slider = pn.widgets.FloatSlider(name='Temperature', start=0.0, end=1.0, step=0.01, value=0.7)
+top_p_slider = pn.widgets.FloatSlider(name='Top P', start=0.0, end=1.0, step=0.1, value=1.0)
+max_tokens_input = pn.widgets.IntInput(name='Max Tokens', value=None, placeholder='Optional')
+random_seed_input = pn.widgets.IntInput(name='Random Seed', value=None, placeholder='Optional')
+
 messages = []
 
 
-# Create chat interface
-def create_chat_interface(model_api_id, model_name):
-    async def callback(contents: str, user: str, instance: pn.chat.ChatInterface):
-        global messages
-        messages.append(ChatMessage(role="user", content=contents))
+async def handle_user_message(contents: str, user: str, chat_instance: pn.chat.ChatInterface):
+    global messages
+    messages.append(ChatMessage(role="user", content=contents))
 
-        # Handle streaming
-        accumulated_message = ""
-        async for chunk in client.chat_stream(model=model_api_id, messages=messages):
-            part = chunk.choices[0].delta.content
-            if part is not None:
-                accumulated_message += part
-                yield accumulated_message
+    model_api_id = model_selector.value
+    safe_prompt = guardrails_select.value
+    temperature = temperature_slider.value
+    top_p = top_p_slider.value
+    max_tokens = max_tokens_input.value
+    random_seed = random_seed_input.value
+    model_name = [name for name, api_id in available_models if api_id == model_api_id][0]
 
-        messages.append(ChatMessage(role="assistant", content=accumulated_message))
+    chat_instance.callback_user = (model_name.upper() + " , guardrails: " + str(safe_prompt) + ", temperature: " +
+                                   str(temperature) + ", top_p: " + str(top_p) + ", max_tokens: " + str(max_tokens) +
+                                   ", random_seed: " + str(random_seed))
 
-    chat_interface = pn.chat.ChatInterface(callback=callback, callback_user=model_name)
-    chat_interface.send(
-        f"Chatting with {model_name}. Send a message to get a reply!", user="System", respond=False
+    accumulated_message = ""
+    async for chunk in client.chat_stream(model=model_api_id, messages=messages, safe_prompt=safe_prompt,
+                                          temperature=temperature, top_p=top_p, max_tokens=max_tokens,
+                                          random_seed=random_seed):
+        part = chunk.choices[0].delta.content
+        if part is not None:
+            accumulated_message += part
+            yield accumulated_message
+
+    messages.append(ChatMessage(role="assistant", content=accumulated_message))
+
+
+chat_interface = pn.chat.ChatInterface(callback=handle_user_message, callback_user="Mistral", show_undo=False,
+                                       show_rerun=False, show_stop=True, widgets=pn.widgets.TextInput(
+                                       placeholder="Talk to Mistral"),)
+
+chat_interface.send("Send a message to get a reply from the selected model!", user="System", respond=False)
+
+config_column = pn.Column(model_selector, guardrails_select, temperature_slider, top_p_slider, max_tokens_input,
+                          random_seed_input)
+
+vertical_separator = pn.Spacer(width=3, sizing_mode='stretch_height', styles={'background': 'black'})
+
+app_header = pn.pane.Markdown(
+    "# Mistral API Simple Client - [github](https://github.com/rogerkibbe/simple-mistral-api-client)",
+    align="center"
+)
+
+app_layout = pn.Column(
+    app_header,
+    pn.Row(
+        chat_interface,
+        vertical_separator,
+        config_column,
+        sizing_mode='stretch_width'
     )
-    return chat_interface
+)
 
-
-def on_model_selected(event):
-    model_name = event.obj.name
-    model_api_id = dict(available_models)[model_name]
-    chat_view = create_chat_interface(model_api_id, model_name)
-    main_view.objects = [chat_view]
-
-
-alert = pn.pane.Alert("", alert_type="light", visible=False)
-
-# Create buttons for model selection
-model_buttons = [pn.widgets.Button(name=model_name, button_type='primary') for model_name, _ in available_models]
-for button in model_buttons:
-    button.on_click(on_model_selected)
-
-# Title and Model Selection Message
-title = pn.pane.Markdown("## Mistral API Chat App - [GitHub](https://github.com/rogerkibbe/simple-mistral-api-client)")
-model_selection_message = pn.pane.Markdown("### Select your Mistral LLM Model")
-
-# Model selection layout
-model_selection_layout = pn.Column(alert, model_selection_message, *model_buttons, sizing_mode='stretch_width')
-
-# Main view initially showing model selection
-main_view = pn.Column(title, model_selection_layout, sizing_mode='stretch_width')
-
-main_view.servable()
+app_layout.servable()

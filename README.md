@@ -8,12 +8,13 @@
 Mistral.AI offers an API with three LLM models:
 1) Mistral 7B: Mistral 7B parameter model
 2) Mistral Mixtral-8x7B: MOE Model
-3) Mistral Medium: larger model available only via the API
+3) Mistral Medium: Medium size model available only via the API
+4) Mistral Large: Largest model available only via the API
 
 Whereas there are multiple ways to access the the first two models (via various providers or by downloading the model from HuggingFace)
-the only current way to run Mistral Medium is via their API.
+the only current way to run Mistral Medium or Large is via their API.
 
-The python code in this project uses the Mistral API to let you access all three of the Mistral models via a chat interface.
+The python code in this project uses the Mistral API to let you access all four of the Mistral models via a chat interface.
 
 There are two versions of a chat interface:
 - `python mistral_api_cli.py`: Command line
@@ -56,14 +57,14 @@ Before running either python script, make sure you have the following prerequisi
 
 1. **Start the Script:**
    - Run the command line script using the command: `python mistral_api_cli.py`
-   - Run the web script using the command: `panel serve mistral_api_web.py`.
+   - Run the web script using the command: `panel serve mistral_api_web.py --show`
 
 2. **Interacting with the command line version:**
    - Follow the on-screen prompts to select an AI model and start a conversation.
    - Type 'stop' to exit the chat client.
 
 3. **Interacting with the Web version:**
-   - Open the URL from the console and open in a browser window. The URL will be on a line that looks like this
+   -  A browser window will automatically open. If needed, the URL will be shown in the terminal like this:
      - `Bokeh app running at: http://localhost:5006/mistral_api_web`
    - Choose the model and start your conversation
    - Quit the python process to exit

@@ -1,0 +1,15 @@
+[tool.poetry]
+name = "Mistral Simple Client"
+version = "0.1.1"
+description = "A simple chat client for Mistral's LLM APIs"
+authors = "Roger Kibbe - https://www.linkedin.com/in/rkibbe/"
+license = "Apache 2"  # or your preferred license
+
+requires-python = ">=3.12"
+
+[tool.poetry.dependencies]
+dependencies = {file = ["requirements.txt"]}
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
