@@ -4,17 +4,23 @@
   <h1 align="Center"> Mistral AI LLM Simple Chat Client - Command Line and Web</h1>
 </p>
 
+            ("Open Mistral 7B", "open-mistral-7b"),
+            ("Open Mistral Mixtral-8x7B", "open-mixtral-8x7b"),
+            ("Mistral Small", "mistral-small-latest"),
+            ("Mistral Medium", "mistral-medium-latest"),
+            ("Mistral Large", "mistral-large-latest")
 
-Mistral.AI offers an API with three LLM models:
-1) Mistral 7B: Mistral 7B parameter model
-2) Mistral Mixtral-8x7B: MOE Model
-3) Mistral Medium: Medium size model available only via the API
-4) Mistral Large: Largest model available only via the API
+Mistral.AI offers an API with five LLM models:
+1) Open Mistral 7B: Mistral 7B parameter model
+2) Open Mistral Mixtral-8x7B: MOE Model
+3) Mistral Small: Improved version of Open Mistral Mixtral-8x7B - API access only
+4) Mistral Medium: Medium Size Model - API acccess only
+5) Mistral Large: Largest model available - API access only
 
-Whereas there are multiple ways to access the the first two models (via various providers or by downloading the model from HuggingFace)
-the only current way to run Mistral Medium or Large is via their API.
+Whereas there are multiple ways to access the the first two models (via various providers or by downloading the models from HuggingFace)
+the only current way to run Mistral Small, Medium or Large is via their API.
 
-The python code in this project uses the Mistral API to let you access all four of the Mistral models via a chat interface.
+The python code in this project uses the Mistral API to let you access all five of the Mistral models via a chat interface.
 
 There are two versions of a chat interface:
 - `python mistral_api_cli.py`: Command line
@@ -65,13 +71,14 @@ Before running either python script, make sure you have the following prerequisi
 
 3. **Interacting with the Web version:**
    -  A browser window will automatically open. If needed, the URL will be shown in the terminal like this:
-     - `Bokeh app running at: http://localhost:5006/mistral_api_web`
+   - `Bokeh app running at: http://localhost:5006/mistral_api_web`
    - Choose the model and start your conversation
+   - Feel free to change the model or parameters during your conversation
    - Quit the python process to exit
 
 ## Troubleshooting
 
-- Ensure that your Python version is 3.9 or higher.
+- Ensure that your Python version is 3.12 or higher.
 - Check if the API key is correctly entered in the `.env` file. 
 - If you encounter any issues or exceptions, please refer to the error message for more details.
 
