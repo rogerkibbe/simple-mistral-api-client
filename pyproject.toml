@@ -2,9 +2,8 @@
 name = "Mistral Simple Client"
 version = "0.1.1"
 description = "A simple chat client for Mistral's LLM APIs"
-authors = "Roger Kibbe - https://www.linkedin.com/in/rkibbe/"
-license = "Apache 2"  # or your preferred license
-
+authors = ["Roger Kibbe - https://www.linkedin.com/in/rkibbe/"]
+license = "Apache-2.0"  # Ensure this is the correct SPDX identifier
 requires-python = ">=3.12"
 
 [tool.poetry.dependencies]
