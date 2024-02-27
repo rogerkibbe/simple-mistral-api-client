@@ -4,23 +4,19 @@
   <h1 align="Center"> Mistral AI LLM Simple Chat Client - Command Line and Web</h1>
 </p>
 
-            ("Open Mistral 7B", "open-mistral-7b"),
-            ("Open Mistral Mixtral-8x7B", "open-mixtral-8x7b"),
-            ("Mistral Small", "mistral-small-latest"),
-            ("Mistral Medium", "mistral-medium-latest"),
-            ("Mistral Large", "mistral-large-latest")
+Note: This codebase is a weekend project e.g., it's a bit messy right now and will be cleaned up gradually
 
 Mistral.AI offers an API with five LLM models:
 1) Open Mistral 7B: Mistral 7B parameter model
 2) Open Mistral Mixtral-8x7B: MOE Model
 3) Mistral Small: Improved version of Open Mistral Mixtral-8x7B - API access only
-4) Mistral Medium: Medium Size Model - API acccess only
+4) Mistral Medium: Medium Size Model - API access only
 5) Mistral Large: Largest model available - API access only
 
-Whereas there are multiple ways to access the the first two models (via various providers or by downloading the models from HuggingFace)
+Whereas there are multiple ways to access the first two models (via various providers or by downloading the models from HuggingFace)
 the only current way to run Mistral Small, Medium or Large is via their API.
 
-The python code in this project uses the Mistral API to let you access all five of the Mistral models via a chat interface.
+The Python code in this project uses the Mistral API to let you access all five of the Mistral models via a chat interface.
 
 There are two versions of a chat interface:
 - `python mistral_api_cli.py`: Command line
@@ -28,7 +24,7 @@ There are two versions of a chat interface:
 
 ## Prerequisites
 
-Before running either python script, make sure you have the following prerequisites:
+Before running either Python script, make sure you have the following prerequisites:
 
 1. Python 3.9 or higher.
 2. `pip` for installing dependencies.
@@ -53,9 +49,9 @@ Before running either python script, make sure you have the following prerequisi
      ```
 
 3. **Environment Variables:**
-   - Create a `.env` file in the root directory of the project.
+   - Create a `.env` file in the project's root directory.
    - Obtain a Mistral API key from [MistralAI](https://mistral.ai/product/)
-   - Add your Mistral API key to the `.env` file Note: If the API key is not set in the `.env` file, the script will prompt you to enter it manually.)
+   - Add your Mistral API key to the `.env` file. Note: If the API key is not set in the `.env` file, the script will prompt you to enter it manually.)
      ```
      MISTRAL_API_KEY=your_api_key_here
 
@@ -74,13 +70,13 @@ Before running either python script, make sure you have the following prerequisi
    - `Bokeh app running at: http://localhost:5006/mistral_api_web`
    - Choose the model and start your conversation
    - Feel free to change the model or parameters during your conversation
-   - Quit the python process to exit
+   - Quit the Python process to exit
 
 ## Troubleshooting
 
-- Ensure that your Python version is 3.12 or higher.
+- Ensure that your Python version is 3.9 or higher.
 - Check if the API key is correctly entered in the `.env` file. 
-- If you encounter any issues or exceptions, please refer to the error message for more details.
+- If you encounter any issues or exceptions, please take a look at the error message for more details.
 
 
 ## API
@@ -89,7 +85,7 @@ Before running either python script, make sure you have the following prerequisi
 
 ## Feedback
 
-This was a fun weekend project to use Mistral's API. Feel free to make PR's or open issues for suggestions.
+This was a fun weekend project to use Mistral's API. Feel free to make PRs or open issues if you have any suggestions.
 Improvements and suggestions are always welcome!
 
 
